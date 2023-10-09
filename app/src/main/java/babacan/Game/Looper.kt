@@ -1,7 +1,7 @@
 package babacan.Game
 
 class Looper {
-    var maxFrameTime = 1000/60
+    var maxFrameTime = 1000/50
     val taskList:MutableList<()->Unit> = mutableListOf()
    // val myBuffer = mutableListOf<Byte>()
     private var running =false

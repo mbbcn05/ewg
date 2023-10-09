@@ -61,7 +61,7 @@ class GameView(context:Context):SurfaceView(context),SurfaceHolder.Callback {
 
             drawPaths()
            drawCountDown()
-            //Game.countDown.updateTime()
+            Game.countDown.updateTime()
             holder.unlockCanvasAndPost(canvas)
         }
 
