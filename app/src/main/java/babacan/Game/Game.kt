@@ -36,30 +36,39 @@ object Game {
     fun handleSourceSelecting(point: MyPoint) {
         if (creathingPath == null) {
             sources.forEach {
-                if (it.shape.isPointInRectangle(point))
+                if (it.shape.isPointInRectangle(point)) {
                     creathingPath = MyPath(it)
+                    Log.i("Source selecting", "source seçildi")
 
 
+                }
             }
 
         }
     }
+    fun handleSourceMoving(x:Float,y:Float){
 
-        fun handleSourceMoving(pointA: MyPoint, pointB: MyPoint) {
-            creathingPath?.let { it.lines.add(MyLine(pointA, pointB)) }
-        }
+        creathingPath?.let { it.addLines(x,y)
+
+    }
+    }
+       // fun handleSourceMoving(pointA: MyPoint, pointB: MyPoint) {
+          //  creathingPath?.let { it.lines.add(MyLine(pointA, pointB)) }
+        //}
 
         fun handleHouseSelecting(point: MyPoint) {
 
             houses.forEach {
-                if (it.rectangle.isPointInRectangle(point) && it.contains(creathingPath!!.source)) {
+                if (it.rectangle.isPointInRectangle(point) && it.acceptIfNotContained(creathingPath!!.source)) {
                     creathingPath!!.apply {
                         clipLinesInRectangle(it.rectangle)
                         clipLinesInRectangle(this.source.shape)
-                        GameMatrix.addPath(this)
+                       // GameMatrix.addPath(this)
                         if (GameMatrix.isIntersection) {
+                            Log.i("houseselecting","intersection oldu")
                             gameOver = true
                         } else {
+                            Log.i("houseselecting","sounsuz pathliste eklendi")
                             myPathList.add(this)
                             creathingPath = null
                         }
@@ -67,7 +76,9 @@ object Game {
                     }
 
                 } else {
-                    gameOver = true
+                    //gameOver = true
+                   // Log.i("houseselecting","house seçilemedi")
+                   // creathingPath = null
                 }
             }
         }

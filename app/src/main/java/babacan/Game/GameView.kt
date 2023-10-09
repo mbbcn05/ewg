@@ -5,14 +5,16 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import androidx.core.view.GestureDetectorCompat
 
 class GameView(context:Context):SurfaceView(context),SurfaceHolder.Callback {
     private val mPaint:Paint= Paint()
-    private val gestures=GestureDetector(context,GestureListener(),null,true)
+    //private val gestures=GestureDetectorCompat(context,GestureListener())
     private lateinit var canvas:Canvas
     lateinit var houseBitmap:Bitmap
     lateinit var sourceBitmap: Bitmap
@@ -45,9 +47,32 @@ class GameView(context:Context):SurfaceView(context),SurfaceHolder.Callback {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        var retval=false
-        retval=gestures.onTouchEvent(event)
-        return retval
+        //var retval=false
+      //  retval=gestures.onTouchEvent(event)
+       // return retval
+        when(event.action){
+
+            MotionEvent.ACTION_DOWN->{
+
+                if(Game.creathingPath==null) Game.handleSourceSelecting(MyPoint(event.x,event.y))
+            }
+            MotionEvent.ACTION_MOVE->{
+                Game.creathingPath?.let { Game.handleSourceMoving(event.x,event.y)
+
+            }
+
+
+            }
+            MotionEvent.ACTION_UP->{
+
+                Game.creathingPath?.let {
+                    Log.i("kaldırma","kaldırma başarılı")
+                    Game.handleHouseSelecting(MyPoint(event.x,event.y))}
+
+            }
+
+      }
+        return true
     }
     private fun drawCanvas(){
         if(holder.surface.isValid){
@@ -87,7 +112,6 @@ class GameView(context:Context):SurfaceView(context),SurfaceHolder.Callback {
     private inner class  GestureListener:GestureDetector.SimpleOnGestureListener(){
 
 
-
         override fun onDown(e: MotionEvent): Boolean {
 
            if(Game.creathingPath==null) Game.handleSourceSelecting(MyPoint(e.x,e.y))
@@ -109,7 +133,8 @@ class GameView(context:Context):SurfaceView(context),SurfaceHolder.Callback {
             distanceY: Float
         ): Boolean {
 
-            Game.creathingPath?.let { Game.handleSourceMoving(MyPoint(e1.x,e1.y),MyPoint(e2.x,e2.y)) }
+            Log.i("srolling..","${e1.x} - ${e1.y}      ${e2.x}-${e2.y}")
+         //   Game.creathingPath?.let { Game.handleSourceMoving(MyPoint(e1.x,e1.y),MyPoint(e2.x,e2.y)) }
             return true
         }
 

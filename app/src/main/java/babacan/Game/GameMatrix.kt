@@ -1,5 +1,7 @@
 package babacan.Game
 
+import android.util.Log
+
 object GameMatrix {
     private var x=0
     private var y=0
@@ -8,6 +10,7 @@ object GameMatrix {
     var isIntersection:Boolean=false
 
     private fun addLine(a:Int,b:Int,c:Int,d:Int){
+        Log.i("addline","addline çalıştı.")
         matrix[a][b]=1
         matrix[c][d]=1
         x=a
