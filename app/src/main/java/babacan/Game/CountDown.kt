@@ -2,10 +2,8 @@ package babacan.Game
 
 class CountDown {
     var second:Double=10.00
-        set(value) {if(value<0)Game.gameOver=true
-            field=value
-        }
-    val frameTime=100/60
+
+    val frameTime=0.02
     fun updateTime(){
         second-=frameTime
     }

@@ -56,30 +56,36 @@ object Game {
           //  creathingPath?.let { it.lines.add(MyLine(pointA, pointB)) }
         //}
 
-        fun handleHouseSelecting(point: MyPoint) {
-
-            houses.forEach {
-                if (it.rectangle.isPointInRectangle(point) && it.acceptIfNotContained(creathingPath!!.source)) {
-                    creathingPath!!.apply {
-                        clipLinesInRectangle(it.rectangle)
-                        clipLinesInRectangle(this.source.shape)
-                       // GameMatrix.addPath(this)
-                        if (GameMatrix.isIntersection) {
-                            Log.i("houseselecting","intersection oldu")
-                            gameOver = true
-                        } else {
-                            Log.i("houseselecting","sounsuz pathliste eklendi")
-                            myPathList.add(this)
-                            creathingPath = null
-                        }
-
-                    }
-
-                } else {
+    fun handleHouseSelecting(point: MyPoint) {
+        var houseSelecting=false
+        houses.forEach {
+            if (it.rectangle.isPointInRectangle(point) && it.acceptIfNotContained(creathingPath!!.source)) {
+                houseSelecting=true
+                creathingPath!!.apply {
+                    // clipLinesInRectangle(it.rectangle)
+                    //clipLinesInRectangle(this.source.shape)
+                    // GameMatrix.addPath(this)
+                    //if (GameMatrix.isIntersection) {
+                    //  Log.i("houseselecting","intersection oldu")
                     //gameOver = true
-                   // Log.i("houseselecting","house seçilemedi")
-                   // creathingPath = null
+                    //} else {
+                    Log.i("houseselecting","sounsuz pathliste eklendi")
+                    myPathList.add(this)
+                    creathingPath = null
+                    return
+                    //}
+
                 }
+
+            } else {
+                //gameOver = true
+                Log.i("houseselecting","Game Over")
+
             }
         }
+        if(!houseSelecting){
+            creathingPath=null
+        }
+
     }
+}

@@ -12,7 +12,7 @@ class GameActivity : Activity() {
         super.onCreate(savedInstanceState)
 
 
-        gameView = GameView(this)
+            gameView = GameView(this)
 
         getWindow().setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,

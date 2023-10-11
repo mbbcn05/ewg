@@ -47,33 +47,43 @@ class GameView(context:Context):SurfaceView(context),SurfaceHolder.Callback {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        //var retval=false
-      //  retval=gestures.onTouchEvent(event)
-       // return retval
-        when(event.action){
+        when (event.action) {
 
-            MotionEvent.ACTION_DOWN->{
+            MotionEvent.ACTION_DOWN -> {
 
-                if(Game.creathingPath==null) Game.handleSourceSelecting(MyPoint(event.x,event.y))
-            }
-            MotionEvent.ACTION_MOVE->{
-                Game.creathingPath?.let { Game.handleSourceMoving(event.x,event.y)
-
+                if (Game.creathingPath == null) Game.handleSourceSelecting(
+                    MyPoint(
+                        event.x,
+                        event.y
+                    )
+                )
             }
 
+            MotionEvent.ACTION_MOVE -> {
+                Game.creathingPath?.let {
+                    Game.handleSourceMoving(event.x, event.y)
+
+
+                }
 
             }
-            MotionEvent.ACTION_UP->{
+
+            MotionEvent.ACTION_UP -> {
 
                 Game.creathingPath?.let {
-                    Log.i("kaldırma","kaldırma başarılı")
-                    Game.handleHouseSelecting(MyPoint(event.x,event.y))}
+                    Log.i("kaldırma", "kaldırma başarılı")
+                    Game.handleHouseSelecting(MyPoint(event.x, event.y))
+                }
+
 
             }
 
-      }
+
+
+        }
         return true
     }
+
     private fun drawCanvas(){
         if(holder.surface.isValid){
             canvas=holder.lockCanvas()
@@ -92,9 +102,15 @@ class GameView(context:Context):SurfaceView(context),SurfaceHolder.Callback {
 
     }
 
-    private fun drawPaths() {
-        Game.myPathList.forEach{path->path.lines.forEach{line->canvas.drawLine(line.p1.x,line.p1.y,line.p2.x,line.p2.y,mPaint)}}
-        Game.creathingPath?.let{it.lines.forEach{line->canvas.drawLine(line.p1.x,line.p1.y,line.p2.x,line.p2.y,mPaint)}}
+    private  fun drawPaths() {
+
+        var list= Game.myPathList.toList()
+
+            .forEach{path->path.lines.forEach{line->canvas.drawLine(line.p1.x,line.p1.y,line.p2.x,line.p2.y,mPaint)}}
+
+
+
+        Game.creathingPath?.let{val lines=it.lines.toList().forEach{line->canvas.drawLine(line.p1.x,line.p1.y,line.p2.x,line.p2.y,mPaint)}}
     }
 
     private fun drawSources() {
